@@ -1,0 +1,27 @@
+{
+  "name": "cordova-plugin-mobpay",
+  "description": "A cordova for MobPaySDK",
+  "author":"ChandlerVer5",
+  "version": "0.0.1",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChandlerVer5/cordova-plugin-mobpay.git"
+  },
+  "keywords": [
+    "cordova",
+    "plugin",
+    "phonegap",
+    "sharesdk",
+    "share"
+  ],
+  "author": "lossa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ChandlerVer5/cordova-plugin-mobpay/issues"
+  },
+  "homepage": "https://github.com/ChandlerVer5/cordova-plugin-mobpay#readme"
+}

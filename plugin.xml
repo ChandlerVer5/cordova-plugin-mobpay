@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<plugin id="cordova-plugin-mobpay" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>MobPayPlugin</name>
+      <license>MIT license</license>
+   <description>MobPay聚合支付插件,Cordova 版本</description>    
+    <keywords>MobPaySDKPlugin, payment</keywords>
+    <repo>https://github.com/ChandlerVer5/cordova-plugin-mobpay</repo>
+    <issue>https://github.com/ChandlerVer5/cordova-plugin-mobpay/issues</issue>
+
+    <!-- add this to your config.xml -->
+    <!-- <preference name="WECHATAPPID" value="YOUR_WECHAT_APP_ID_HERE" /> -->
+    <preference name="MOB_APPKEY"/>
+    <preference name="MOB_APPSECRET"/>
+
+    <!--require cordova version -->
+    <engines>
+        <engine name="cordova" version=">=3.5.0"/>
+    </engines>
+
+    <js-module src="www/MobPayPlugin.js" name="MobPayPlugin">
+        <clobbers target="cordova.plugins.MobPay"/>
+    </js-module>
+
+    <platform name="android">
+        <config-file target="config.xml" parent="/*">
+            <feature name="MobPayPlugin">
+                <param name="android-package" value="com.wjipet.mobpay.MobPayPlugin"/>
+            </feature>
+        </config-file>
+
+                <!-- Plugin Source -->
+        <source-file src="src/android/MobPayPlugin.java"
+                     target-dir="src/com/wjipet/mobpay"/>
+
+        <config-file target="AndroidManifest.xml" parent="/*">
+             <!-- 支付Pay sdk权限 -->
+              <uses-permission android:name="android.permission.INTERNET" />
+              <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+              <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+              <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+              <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+        </config-file>
+
+        <!-- Plugin Source -->
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <!-- 支付Pay sdk权限 -->
+            <activity
+                android:name="com.mob.paysdk.PaymentActivity"
+                android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+                android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
+                android:exported="true">
+            </activity>
+
+            <!-- 支付宝 -->
+            <!-- alipay sdk begin -->
+            <activity
+                    android:name="com.alipay.sdk.app.H5PayActivity"
+                    android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+                    android:exported="false"
+                    android:screenOrientation="behind"
+                    android:windowSoftInputMode="adjustResize|stateHidden">
+            </activity>
+            <activity
+                    android:name="com.alipay.sdk.app.H5AuthActivity"
+                    android:configChanges="orientation|keyboardHidden|navigation"
+                    android:exported="false"
+                    android:screenOrientation="behind"
+                    android:windowSoftInputMode="adjustResize|stateHidden">
+            </activity>
+            <!-- alipay sdk end -->
+
+            <!-- 微信支付 -->
+            <activity
+                android:name=".wxapi.WXPayEntryActivity"
+                android:exported="true"
+                android:targetActivity="com.mob.paysdk.PaymentActivity" />
+
+          <!-- unionpay sdk begin -->
+        <activity
+                android:name="com.unionpay.uppay.PayActivity"
+                android:screenOrientation="portrait"
+          android:configChanges="orientation|keyboardHidden"
+                android:excludeFromRecents="true"
+                android:windowSoftInputMode="adjustResize"/>
+            <activity
+                android:name="com.unionpay.UPPayWapActivity"
+                android:configChanges="orientation|keyboardHidden"
+                android:screenOrientation="portrait"
+                android:windowSoftInputMode="adjustResize"/>
+          <!-- unionpay sdk end -->
+
+          <!-- 填写您从Mob开发者后台中得到的Appkey和AppSecret -->
+            <meta-data android:name="Mob-AppKey" android:value="$MOB_APPKEY"/>
+            <meta-data android:name="Mob-AppSecret" android:value="$MOB_APPSECRET"/>
+        </config-file>
+
+
+        <!-- MobPaySDK Libs -->
+     <framework src="src/android/MobPayPlugin.gradle" custom="true" type="gradleReference" />
+      <!-- Depend on library project included in plugin -->
+<!--       <lib-file src="src/android/PaySDK/libs/MobCommons-2018.0918.1444.jar"/>
+      <lib-file src="src/android/PaySDK/libs/MobTools-2018.0911.1425.jar"/>
+      
+      <lib-file src="src/android/PaySDK/libs/alipaySdk-20170725.jar" />
+     <lib-file src="src/android/PaySDK/libs/PaySDK-1.1.0.jar"/>
+     <lib-file src="src/android/PaySDK/libs/SDKWrapper-2018.0801.1824.jar"/>
+     <lib-file src="src/android/PaySDK/libs/UPPayAssistEx.jar" />
+     <lib-file src="src/android/PaySDK/libs/UPPayPluginExPro.jar"/>
+     <lib-file src="src/android/PaySDK/libs/wechat-sdk-android-without-mta-5.1.4.jar" /> -->
+
+        <!-- MobPaySDK Sources -->
+    <source-file src="src/android/PaySDK/assets/data.bin" target-dir="assets" />
+      
+      <source-file src="src/android/PaySDK/libs/arm64-v8a/libentryexpro.so" target-dir="libs/arm64-v8a" />
+      <source-file src="src/android/PaySDK/libs/arm64-v8a/libuptsmaddon.so" target-dir="libs/arm64-v8a" />
+      <source-file src="src/android/PaySDK/libs/arm64-v8a/libuptsmaddonmi.so" target-dir="libs/arm64-v8a" />
+
+      <source-file src="src/android/PaySDK/libs/armeabi/libentryexpro.so" target-dir="libs/armeabi" />
+      <source-file src="src/android/PaySDK/libs/armeabi/libuptsmaddon.so" target-dir="libs/armeabi" />
+      <source-file src="src/android/PaySDK/libs/armeabi/libuptsmaddonmi.so" target-dir="libs/armeabi" />
+
+      <source-file src="src/android/PaySDK/libs/armeabi-v7a/libentryexpro.so" target-dir="libs/armeabi-v7a" />
+      <source-file src="src/android/PaySDK/libs/armeabi-v7a/libuptsmaddon.so" target-dir="libs/armeabi-v7a" />
+      <source-file src="src/android/PaySDK/libs/armeabi-v7a/libuptsmaddonmi.so" target-dir="libs/armeabi-v7a" />
+
+      <source-file src="src/android/PaySDK/libs/x86_64/libentryexpro.so" target-dir="libs/x86_64" />
+      <source-file src="src/android/PaySDK/libs/x86_64/libuptsmaddon.so" target-dir="libs/x86_64" />
+      <source-file src="src/android/PaySDK/libs/x86_64/libuptsmaddonmi.so" target-dir="libs/x86_64" />
+
+      <source-file src="src/android/PaySDK/libs/x86/libentryexpro.so" target-dir="libs/x86" />
+      <source-file src="src/android/PaySDK/libs/x86/libuptsmaddon.so" target-dir="libs/x86" />
+      <source-file src="src/android/PaySDK/libs/x86/libuptsmaddonmi.so" target-dir="libs/x86" />
+    </platform>
+
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="MobPayPlugin">
+                <param name="ios-package" value="MobPayPlugin"/>
+            </feature>
+              <preference name="Mob_AppKey" value="$MOB_APPKEY" />
+              <preference name="Mob_AppSecret" value="$MOB_APPSECRET" />
+        </config-file>
+
+
+
+        <config-file target="*-Info.plist" parent="CFBundleURLTypes">
+            <array>
+                <dict>
+                    <key>CFBundleTypeRole</key>
+                    <string>Editor</string>
+                    <key>CFBundleURLName</key>
+                    <string></string>
+                    <key>CFBundleURLSchemes</key>
+                    <array>
+                        <string>$WECHATAPPID</string>
+                    </array>
+                </dict>
+                <dict>
+                    <key>CFBundleTypeRole</key>
+                    <string>Editor</string>
+                    <key>CFBundleURLName</key>
+                    <string></string>
+                    <key>CFBundleURLSchemes</key>
+                    <array>
+                        <string>wb$WBAPPKEY</string>
+                    </array>
+                </dict>
+                <dict>
+                    <key>CFBundleTypeRole</key>
+                    <string>Editor</string>
+                    <key>CFBundleURLName</key>
+                    <string></string>
+                    <key>CFBundleURLSchemes</key>
+                    <array>
+                        <string>tencent$QQAPPID_IOS</string>
+                    </array>
+                </dict>
+                <dict>
+                    <key>CFBundleTypeRole</key>
+                    <string>Editor</string>
+                    <key>CFBundleURLName</key>
+                    <string></string>
+                    <key>CFBundleURLSchemes</key>
+                    <array>
+                        <string>$QQURLSCHEME</string>
+                    </array>
+                </dict>
+            </array>
+        </config-file>
+
+        <config-file target="*-Info.plist" parent="LSApplicationQueriesSchemes">
+             <array>
+
+              <!-- 银联 -->
+                <string>uppaysdk</string>
+                <string>uppaywallet</string>
+                <string>uppayx1</string>
+                <string>uppayx2</string>
+                <string>uppayx3</string>
+            </array>
+
+        </config-file>
+
+        <header-file src="src/ios/ShareSDKPlugin.h"/>
+        <source-file src="src/ios/ShareSDKPlugin.m"/>
+
+        <!-- Other required frameworks -->
+        <framework src="MessageUI.framework"/>
+        <framework src="libz.tbd"/>
+        <framework src="libicucore.tbd"/>
+        <framework src="libstdc++.tbd"/>
+        <framework src="JavaScriptCore.framework"/>
+        <framework src="ImageIO.framework"/>
+        <framework src="libsqlite3.tbd"/>
+
+        <!-- ShareSDK -->
+        <framework src="src/ios/ShareSDK/ShareSDK.framework" custom="true"/>
+        <!-- Support -->
+        <framework src="src/ios/ShareSDK/Support/Optional/ShareSDKConfigFile.framework" custom="true"/>
+        <framework src="src/ios/ShareSDK/Support/Optional/ShareSDKExtension.framework" custom="true"/>
+        <framework src="src/ios/ShareSDK/Support/Optional/ShareSDKUI.framework" custom="true"/>
+        <resource-file src="src/ios/ShareSDK/Support/Optional/ShareSDKConfigFile.bundle"/>
+        <resource-file src="src/ios/ShareSDK/Support/Optional/ShareSDKUI.bundle"/>
+
+        <framework src="src/ios/ShareSDK/Support/PlatformConnector/QQConnector.framework" custom="true"/>
+        <framework src="src/ios/ShareSDK/Support/PlatformConnector/SinaWeiboConnector.framework" custom="true"/>
+        <framework src="src/ios/ShareSDK/Support/PlatformConnector/WechatConnector.framework" custom="true"/>
+
+        <framework src="src/ios/ShareSDK/Support/PlatformSDK/QQSDK/TencentOpenAPI.framework" custom="true"/>
+        <resource-file src="src/ios/ShareSDK/Support/PlatformSDK/QQSDK/TencentOpenApi_IOS_Bundle.bundle"/>
+
+        <resource-file src="src/ios/ShareSDK/Support/PlatformSDK/SinaWeiboSDK/WeiboSDK.bundle"/>
+        <source-file src="src/ios/ShareSDK/Support/PlatformSDK/SinaWeiboSDK/libWeiboSDK.a" framework="true"/>
+        <header-file src="src/ios/ShareSDK/Support/PlatformSDK/SinaWeiboSDK/WBHttpRequest+WeiboGame.h"/>
+        <header-file src="src/ios/ShareSDK/Support/PlatformSDK/SinaWeiboSDK/WBHttpRequest+WeiboShare.h"/>
+        <header-file src="src/ios/ShareSDK/Support/PlatformSDK/SinaWeiboSDK/WBHttpRequest+WeiboToken.h"/>
+        <header-file src="src/ios/ShareSDK/Support/PlatformSDK/SinaWeiboSDK/WBHttpRequest+WeiboUser.h"/>
+        <header-file src="src/ios/ShareSDK/Support/PlatformSDK/SinaWeiboSDK/WBHttpRequest.h"/>
+        <header-file src="src/ios/ShareSDK/Support/PlatformSDK/SinaWeiboSDK/WBSDKBasicButton.h"/>
+        <header-file src="src/ios/ShareSDK/Support/PlatformSDK/SinaWeiboSDK/WBSDKCommentButton.h"/>
+        <header-file src="src/ios/ShareSDK/Support/PlatformSDK/SinaWeiboSDK/WBSDKRelationshipButton.h"/>
+        <header-file src="src/ios/ShareSDK/Support/PlatformSDK/SinaWeiboSDK/WeiboSDK+Statistics.h"/>
+        <header-file src="src/ios/ShareSDK/Support/PlatformSDK/SinaWeiboSDK/WeiboSDK.h"/>
+        <header-file src="src/ios/ShareSDK/Support/PlatformSDK/SinaWeiboSDK/WeiboUser.h"/>
+
+        <header-file src="src/ios/ShareSDK/Support/PlatformSDK/WeChatSDK/WechatAuthSDK.h"/>
+        <header-file src="src/ios/ShareSDK/Support/PlatformSDK/WeChatSDK/WXApi.h"/>
+        <header-file src="src/ios/ShareSDK/Support/PlatformSDK/WeChatSDK/WXApiObject.h"/>
+        <source-file src="src/ios/ShareSDK/Support/PlatformSDK/WeChatSDK/libWeChatSDK.a" framework="true"/>
+
+        <framework src="src/ios/ShareSDK/Support/Required/MOBFoundation.framework" custom="true"/>
+        <resource-file src="src/ios/ShareSDK/Support/Required/ShareSDK.bundle"/>
+        <framework src="src/ios/ShareSDK/Support/Required/ShareSDKConnector.framework" custom="true"/>
+
+    </platform>
+</plugin>

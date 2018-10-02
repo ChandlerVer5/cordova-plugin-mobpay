@@ -1,0 +1,29 @@
+// if (buildDepFromMaven) {
+    apply plugin: 'com.mob.sdk'
+// }
+
+
+// repositories {
+// 	jcenter()
+// }
+
+// dependencies {
+//     // if (!buildDepFromMaven) {
+//         // compile project(':PaySDK')
+//     // }
+//     classpath 'com.mob.sdk:MobSDK:+'
+// }
+
+// if (buildDepFromMaven) {
+    MobSDK {
+        MobCommons {}
+        MobTools{}
+        PaySDK{
+        	  info {
+	            AliPay {}
+	            Wechat {}
+	            UnionPay {}
+		      }
+        }
+    }
+// }
