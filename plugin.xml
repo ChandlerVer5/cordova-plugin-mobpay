@@ -12,7 +12,7 @@
     <!-- <preference name="WECHATAPPID" value="YOUR_WECHAT_APP_ID_HERE" /> -->
     <preference name="MOB_APPKEY"/>
     <preference name="MOB_APPSECRET"/>
-    <framework src="com.mob.sdk:MobSDK:+" />
+
     <!--require cordova version -->
     <engines>
         <engine name="cordova" version=">=3.5.0"/>
@@ -23,6 +23,8 @@
     </js-module>
 
     <platform name="android">
+      <hook type="before_plugin_install" src="scripts/android/modifygradle_before_install.js"/>
+      <hook type="before_plugin_uninstall" src="scripts/android/modifygradle_before_uninstall.js"/>
         <config-file target="config.xml" parent="/*">
             <feature name="MobPayPlugin">
                 <param name="android-package" value="com.wjipet.mobpay.MobPayPlugin"/>
@@ -98,7 +100,8 @@
 
 
         <!-- MobPaySDK Libs -->
-     <framework src="src/android/MobPayPlugin.gradle" custom="true" type="gradleReference" />
+        <!-- <framework src="com.mob.sdk:MobSDK:+" /> -->
+     <framework src="src/android/build-extras.gradle" custom="true" type="gradleReference" />
       <!-- Depend on library project included in plugin -->
 <!--       <lib-file src="src/android/PaySDK/libs/MobCommons-2018.0918.1444.jar"/>
       <lib-file src="src/android/PaySDK/libs/MobTools-2018.0911.1425.jar"/>

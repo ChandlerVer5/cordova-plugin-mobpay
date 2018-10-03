@@ -1,10 +1,9 @@
 // if (buildDepFromMaven) {
-    apply plugin: 'com.mob.sdk'
+apply plugin: 'com.mob.sdk'
+
 // }
-
-
 // repositories {
-// 	jcenter()
+//  jcenter()
 // }
 
 // dependencies {
@@ -19,11 +18,15 @@
         MobCommons {}
         MobTools{}
         PaySDK{
-        	  info {
-	            AliPay {}
-	            Wechat {}
-	            UnionPay {}
-		      }
+              info {
+                AliPay {}
+                Wechat {}
+                UnionPay {}
+              }
         }
     }
 // }
+
+
+
+
