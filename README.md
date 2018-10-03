@@ -17,26 +17,6 @@ cordova plugin add https://github.com/ChandlerVer5/cordova-plugin-mobpay.git  --
 ~~~
 
 
-# 注意
-
-通过gradle构建，需要先在 platform > android 下的build.gradle 中设置：
-~~~
-buildscript {
-    repositories {
-        jcenter()
-    }
- 
-    dependencies {
-        ...
-        classpath 'com.mob.sdk:MobSDK:+'  //找到该位置，添加该行即可
- 
-    }
-}
-~~~
-
-然后再进行 `cordova build android` 。
-
-
 # 使用
 (如果需要测试付款 设置 amount:10.0，即可0.10元)
 ~~~
